@@ -28,6 +28,7 @@ public class Splash extends JFrame implements Runnable{
             Thread.sleep(7000);
             setVisible(false);
             //from here we will direct to next class
+            new Login();
         }catch(Exception e){
             e.printStackTrace();
         }
