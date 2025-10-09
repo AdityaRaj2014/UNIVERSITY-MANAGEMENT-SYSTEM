@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login extends JFrame implements ActionListener {
     JTextField textFieldName;
@@ -47,7 +49,7 @@ public class Login extends JFrame implements ActionListener {
         ImageIcon i33 = new ImageIcon(i22);
         JLabel image = new JLabel(i33);
         image.setBounds(0,0,600,300);
-        add(img);
+        add(image);
 
         setSize(600,300);
         setLocation(500,250);
@@ -58,6 +60,22 @@ public class Login extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
          if(e.getSource()==login){
              //user will automatically login to the page
+             String username = textFieldName.getText();
+             String password = new String(passwordField.getPassword()); // correct way to get password
+             String query = "select * from login where username='"+username+"' and password='"+password+"'";
+             try{
+                 Conn c = new Conn();
+                 ResultSet resultSet = c.statement.executeQuery(query);
+                 if(resultSet.next()){
+                     setVisible(false);
+                     //next class
+                     new main_class();
+                 }else{
+                     JOptionPane.showMessageDialog(null,"Incorrect username or password");
+                 }
+             }catch(Exception E){
+                 E.printStackTrace();
+             }
          }else{
              setVisible(false);
          }
